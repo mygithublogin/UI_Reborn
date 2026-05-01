@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: |cffCC3333 UI|r Reborn Bag
+## Author: |cFF50fe50 BelikOff|r  thx: Tuller
+## OptionalDeps: Ace3
+## Dependencies: UI_Reborn
+## SavedVariables: CombuctorDB2, CombuctorVersion
+embeds.xml
+load.xml

@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: |cffCC3333 UI|r Reborn Bag Config
+## Author: |cFF50fe50 BelikOff|r  thx: Tuller
+## Dependencies: UI_Reborn
+panel.lua
+general.lua
+sets.lua
