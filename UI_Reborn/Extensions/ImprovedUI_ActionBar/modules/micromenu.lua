@@ -44,6 +44,7 @@ local pUiBagsBar = CreateFrame(
 pUiBagsBar:SetScale(config.micromenu.scale_bags);
 MainMenuBarBackpackButton:SetParent(pUiBagsBar);
 KeyRingButton:SetParent(_G.CharacterBag3Slot);
+
 function MainMenuMicroButtonMixin:bagbuttons_setup()
 	MainMenuBarBackpackButton:SetSize(50, 50)
 	MainMenuBarBackpackButton:SetNormalTexture(nil)
@@ -298,6 +299,11 @@ local function setupMicroButtons(xOffset)
 		button:texture_strip()
 
 		button:SetParent(pUiMicroMenu)
+        -- FIX: Полностью запрещаем клиенту игры менять родителя или прятать эти кнопки
+        button.SetParent = addon._noop
+        button:Show()
+        button.Hide = addon._noop
+        
 		-- button:SetScale(1.4)
 		button:SetSize(14, 19)
 		button:SetClearPoint('BOTTOMLEFT', pUiMicroMenu, 'BOTTOMRIGHT', buttonxOffset, 51)
@@ -351,6 +357,8 @@ local function updateMicroButtonsTextures()
 	CharacterMicroButton:SetDisabledTexture('')
 	for _,button in pairs(MICRO_BUTTONS) do
 		setMicroButtonTexture(button)
+        -- FIX: Сирус может менять Alpha, так что принудительно делаем их непрозрачными
+        button:SetAlpha(1)
 	end
 end
 
