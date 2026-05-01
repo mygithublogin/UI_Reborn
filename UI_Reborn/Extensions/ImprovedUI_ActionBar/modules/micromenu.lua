@@ -17,10 +17,10 @@ local HelpMicroButton = _G.HelpMicroButton;
 local KeyRingButton = _G.KeyRingButton;
 
 local bagslots = {
-    _G.CharacterBag0Slot,
-    _G.CharacterBag1Slot,
-    _G.CharacterBag2Slot,
-    _G.CharacterBag3Slot
+	_G.CharacterBag0Slot,
+	_G.CharacterBag1Slot,
+	_G.CharacterBag2Slot,
+	_G.CharacterBag3Slot
 };
 local MICRO_BUTTONS = {
 	_G.CharacterMicroButton,
@@ -286,28 +286,25 @@ end
 MainMenuMicroButtonMixin:CreateBar();
 
 local function setupMicroButtons(xOffset)
-	local buttonxOffset = -27
 	local menu = CreateFrame('Frame', 'pUiMicroMenu', UIParent)
 	menu:SetScale(config.micromenu.scale_menu)
 	menu:SetSize(10, 10)
 	menu:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMRIGHT', xOffset, config.micromenu.y_position)
-	CharacterMicroButton:SetDisabledTexture('') -- doesn't exist by default
+	
+	-- Поднимаем меню над стандартным интерфейсом
+	menu:SetFrameStrata('HIGH')
+
+	CharacterMicroButton:SetDisabledTexture('')
+	
+	local buttonxOffset = -27
 	for _,button in pairs(MICRO_BUTTONS) do
 		local buttonName = button:GetName():gsub('MicroButton', '')
 		local name = strlower(buttonName);
 
 		button:texture_strip()
-
 		button:SetParent(pUiMicroMenu)
-        -- FIX: Полностью запрещаем клиенту игры менять родителя или прятать эти кнопки
-        button.SetParent = addon._noop
-        button:Show()
-        button.Hide = addon._noop
-        
-		-- button:SetScale(1.4)
 		button:SetSize(14, 19)
 		button:SetClearPoint('BOTTOMLEFT', pUiMicroMenu, 'BOTTOMRIGHT', buttonxOffset, 51)
-		button.SetPoint = addon._noop
 		button:SetHitRectInsets(0,0,0,0)
 
 		button:GetNormalTexture():set_atlas('ui-hud-micromenu-'..name..'-up-2x')
@@ -355,10 +352,19 @@ end
 local function updateMicroButtonsTextures()
 	GuildMicroButton.Spinner:SetAlpha(0)
 	CharacterMicroButton:SetDisabledTexture('')
+	
+	local buttonxOffset = -27
 	for _,button in pairs(MICRO_BUTTONS) do
 		setMicroButtonTexture(button)
-        -- FIX: Сирус может менять Alpha, так что принудительно делаем их непрозрачными
-        button:SetAlpha(1)
+		
+		-- ФИКС: Заново закрепляем кнопки на их законных местах при каждом обновлении
+		button:SetParent(pUiMicroMenu)
+		button:SetClearPoint('BOTTOMLEFT', pUiMicroMenu, 'BOTTOMRIGHT', buttonxOffset, 51)
+		button:Show()
+		button:SetAlpha(1)
+		button:EnableMouse(true)
+		
+		buttonxOffset = buttonxOffset + 15
 	end
 end
 
