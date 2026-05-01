@@ -1,0 +1,17 @@
+## Interface: 30300
+## Title: |cffCC3333 UI|r Reborn
+## Notes: Адаптация Актуального пользовательского интерфейса.
+## Author: |cFF50fe50 BelikOff|r  thx: Oleg Doronin, Karl-Heinz Schneider, s0high
+## Version: 1.2.7
+## SavedVariables: UI_Reborn_DB
+
+UI_Reborn.xml
+nMainbarConfig.lua
+
+nMainbar.lua
+
+nMainbarShortBar.lua
+nMainbarActionBars.lua
+
+nMainbarExpBar.lua
+nMainbarExtras.lua
